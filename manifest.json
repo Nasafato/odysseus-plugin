@@ -1,0 +1,11 @@
+{
+	"id": "odysseus-plugin",
+	"name": "Odysseus Plugin",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Odysseus Plugin",
+	"author": "Odysseus",
+	"authorUrl": "https://odysseus.com",
+	"fundingUrl": "https://odysseus.com/pricing",
+	"isDesktopOnly": false
+}

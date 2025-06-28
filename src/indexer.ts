@@ -10,15 +10,6 @@ interface Indexer {
 class DefaultIndexer implements Indexer {
     constructor(private chunker: Chunker, private embedder: Embedder) {}
 
-    // async indexFilePaths(app: App, filePaths: string[]): Promise<void> {
-    //     for (const filePath of filePaths) {
-    //         const file = app.vault.getFileByPath(filePath);
-    //         const content = file.content;
-    //         const chunks = naiveChunker.chunk(content);
-    //         const embeddings = await voyageEmbedder.embedBulk(chunks);
-    //     }
-    // }
-
     async indexFilePaths(app: App, filePaths: string[]): Promise<void> {
         for (const filePath of filePaths) {
             const file = app.vault.getFileByPath(filePath);

@@ -83,3 +83,7 @@ The plugin follows Obsidian's standard plugin architecture:
 - External dependencies must be declared in esbuild.config.mjs externals array
 - TypeScript compilation uses ES6 target with strict null checks
 - Hot reload requires reloading Obsidian or toggling plugin in settings
+
+## Code Style and Performance
+
+- Use `for (const ... of) instead of .forEach`

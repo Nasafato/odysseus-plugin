@@ -6,20 +6,32 @@
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json"
+		"version": "node version-bump.mjs && git add manifest.json versions.json",
+		"test": "vitest"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
+		"@types/better-sqlite3": "^7.6.13",
+		"@types/fs-extra": "^11",
 		"@types/node": "^16.11.6",
+		"@types/tar": "^6.1.13",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
 		"builtin-modules": "3.3.0",
 		"esbuild": "0.17.3",
 		"obsidian": "latest",
 		"tslib": "2.4.0",
-		"typescript": "4.7.4"
+		"typescript": "4.7.4",
+		"vitest": "^3.2.4"
 	},
-	"packageManager": "yarn@4.9.2"
+	"packageManager": "yarn@4.9.2",
+	"dependencies": {
+		"better-sqlite3": "^12.2.0",
+		"fs-extra": "^11.3.0",
+		"jszip": "^3.10.1",
+		"sqlite-vec": "^0.1.7-alpha.2",
+		"tar": "^7.4.3"
+	}
 }

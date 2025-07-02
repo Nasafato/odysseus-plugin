@@ -1,6 +1,7 @@
 import { App, TFile } from "obsidian";
-import { Chunker } from "./chunking";
-import { Embedder } from "./embedding";
+import { Chunker, NaiveChunker } from "./chunking";
+import { Embedder, VoyageEmbedder } from "./embedding";
+import { EmbeddingDatabase } from "./database";
 
 interface Indexer {
     indexFilePaths(app: App, filePaths: string[]): Promise<void>;
@@ -8,7 +9,11 @@ interface Indexer {
 }
 
 class DefaultIndexer implements Indexer {
-    constructor(private chunker: Chunker, private embedder: Embedder) {}
+    constructor(
+        private chunker: Chunker, 
+        private embedder: Embedder,
+        private database: EmbeddingDatabase
+    ) {}
 
     async indexFilePaths(app: App, filePaths: string[]): Promise<void> {
         for (const filePath of filePaths) {
@@ -17,7 +22,7 @@ class DefaultIndexer implements Indexer {
             const cachedRead = await app.vault.cachedRead(file);
             const chunks = this.chunker.chunk(cachedRead);
             const embeddings = await this.embedder.embedBulk(chunks);
-            await this.storeEmbeddings(file, embeddings);
+            await this.database.storeChunks(file, chunks, embeddings);
         }
     }
 
@@ -27,12 +32,16 @@ class DefaultIndexer implements Indexer {
             const cachedRead = await app.vault.cachedRead(file);
             const chunks = this.chunker.chunk(cachedRead);
             const embeddings = await this.embedder.embedBulk(chunks);
-            await this.storeEmbeddings(file, embeddings);
+            await this.database.storeChunks(file, chunks, embeddings);
         }
     }
 
-    private async storeEmbeddings(file: TFile, embeddings: number[][]): Promise<void> {
-        // TODO: Store the embedding in the database.
-        // We'll use a local sqlite database.
-    }
+}
+
+export function getIndexer(
+    chunker: Chunker = NaiveChunker.default(), 
+    embedder: Embedder = VoyageEmbedder.default(),
+    database: EmbeddingDatabase = new EmbeddingDatabase()
+): Indexer {
+    return new DefaultIndexer(chunker, embedder, database);
 }

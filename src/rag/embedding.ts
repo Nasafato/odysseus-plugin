@@ -13,9 +13,15 @@ export class VoyageEmbedder implements Embedder {
         model: 'voyage-3.5-lite',
         maxTokenLength: 1_000_000
     }
+
     static default() {
         assert(process.env.VOYAGE_API_KEY, "VOYAGE_API_KEY is not set");
         return new VoyageEmbedder(process.env.VOYAGE_API_KEY);
+    }
+
+    static init(apiKey: string) {
+        voyageEmbedder = new VoyageEmbedder(apiKey);
+        return voyageEmbedder;
     }
 
     constructor(private apiKey: string) {

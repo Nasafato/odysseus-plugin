@@ -12,6 +12,10 @@ export class NaiveChunker implements Chunker {
 
     chunk(text: string): string[] {
         const chunks: string[] = [];
+        if (text.length === 0) {
+            chunks.push('');
+            return chunks;
+        }
         for (let i = 0 ; i <text.length; i+= 500) {
             chunks.push(text.slice(i, i + 500));
         }
